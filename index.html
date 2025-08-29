@@ -27,7 +27,6 @@
     .btn.ghost{background:#fff}
     .hamburger{font-size:22px;background:none;border:0;display:inline-flex}
     @media(min-width:860px){.links{display:flex}.hamburger{display:none}}
-    /* Sections */
     section{padding:56px 0}
     h1{font-size:clamp(28px,5vw,42px);line-height:1.15;margin:10px 0}
     h2{font-size:clamp(22px,3.2vw,32px);margin:0 0 10px}
@@ -42,13 +41,10 @@
     .img{width:100%;height:240px;object-fit:cover;background:#f1f5f9;border-radius:var(--radius)}
     .input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px}
     .stack{display:flex;flex-direction:column;gap:10px}
-    /* Pricing */
     .price{font-weight:800;font-size:22px}
     .list{list-style:none;margin:8px 0 0;padding:0}
     .list li{padding:6px 0}
-    /* Footer */
     footer{border-top:1px solid var(--line);padding:20px 0;color:var(--muted);font-size:14px}
-    /* Mobile menu panel */
     .mobile{display:none;flex-direction:column;gap:10px;padding:10px 0}
     .mobile.open{display:flex}
   </style>
@@ -109,14 +105,19 @@
 
       <div class="card">
         <h3 style="margin-top:0">Quick Project Brief</h3>
-        <form id="briefForm" class="stack">
+        <!-- WIRED TO FORMSPREE -->
+        <form id="briefForm" class="stack" action="https://formspree.io/f/xgvlowop" method="POST">
           <input class="input" name="name" placeholder="Your name" required />
-          <input class="input" name="email" type="email" placeholder="Email address" required />
+          <input class="input" name="_replyto" type="email" placeholder="Email address" required />
           <input class="input" name="business" placeholder="Business / Website (optional)" />
           <textarea class="input" name="needs" rows="4" placeholder="What do you need? (Website, Dashboard, Automation)" required></textarea>
-          <!-- Replace with Formspree/EmailJS endpoint or redirect to Calendly -->
+
+          <!-- Helpful hidden fields -->
+          <input type="hidden" name="_subject" value="Quick Project Brief — TechNova System LLC">
+          <input type="hidden" name="_format" value="json">
+
           <button class="btn primary" type="submit">Send & Book</button>
-          <small class="muted">Demo only. Connect to Formspree/EmailJS or your backend for production.</small>
+          <p id="briefStatus" class="muted" aria-live="polite"></p>
         </form>
       </div>
     </section>
@@ -198,7 +199,6 @@
     <section id="newsletter" class="container">
       <h2>Join the TechNova list</h2>
       <p class="muted">Get launch offers and tips. No spam.</p>
-      <!-- Replace with Constant Contact embed or API later -->
       <form id="newsForm" style="display:flex; gap:8px; flex-wrap:wrap; max-width:520px;">
         <input class="input" type="email" required placeholder="Email address" />
         <button class="btn primary" type="submit">Subscribe</button>
@@ -213,14 +213,18 @@
 
       <div class="grid cols-2" style="margin-top:14px; align-items:start">
         <div class="card">
-          <form id="contactForm" class="stack">
+          <!-- WIRED TO FORMSPREE -->
+          <form id="contactForm" class="stack" action="https://formspree.io/f/xgvlowop" method="POST">
             <input class="input" name="name" placeholder="Full name" required />
-            <input class="input" name="email" type="email" placeholder="Email" required />
+            <input class="input" name="_replyto" type="email" placeholder="Email" required />
             <input class="input" name="phone" placeholder="Phone (optional)" />
             <textarea class="input" name="message" rows="5" placeholder="Tell me about your project" required></textarea>
-            <!-- Replace with Formspree/EmailJS endpoint to send emails -->
+
+            <input type="hidden" name="_subject" value="New message from TechNova System LLC">
+            <input type="hidden" name="_format" value="json">
+
             <button class="btn primary" type="submit">Send message</button>
-            <small class="muted">For production, connect to Formspree, EmailJS, or your backend.</small>
+            <p id="formStatus" class="muted" aria-live="polite"></p>
           </form>
         </div>
 
@@ -229,7 +233,7 @@
           <p class="muted">
             TechNova System LLC<br>
             Email: <a href="mailto:Ruaaaltameemi@gmail.com">Ruaaaltameemi@gmail.com</a><br>
-            Phone: <a href="tel:+10000000000">+1 (916)586-1411</a><br>
+            Phone: <a href="tel:+19165861411">+1 (916)586-1411</a><br>
             Location: Fairfax, Virginia (Available worldwide)
           </p>
           <strong>Social</strong>
@@ -240,6 +244,40 @@
       </div>
     </section>
   </main>
+
+  <section id="about" class="container">
+  <h2>About TechNova System</h2>
+  <p class="lead">
+    TechNova System is a growing tech company based in Fairfax, VA. 
+    We specialize in <b>web design, data dashboards, and Python automation</b> 
+    for small businesses and startups.
+  </p>
+
+  <div class="card" style="margin-top:14px">
+    <h3>Our Mission</h3>
+    <p>
+      To help small businesses establish a strong digital presence with 
+      affordable, modern websites and tools that save time and grow revenue.
+    </p>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>Why Work With Us?</h3>
+    <ul>
+      <li>✅ Fast project delivery (5–7 days)</li>
+      <li>✅ Clear pricing & scope — no hidden fees</li>
+      <li>✅ Portfolio available on 
+        <a href="https://github.com/ruaaaltameemi4" target="_blank">GitHub</a>
+      </li>
+      <li>✅ Bilingual support (English)</li>
+    </ul>
+  </div>
+
+  <p class="muted" style="margin-top:12px">
+    <i>Note: TechNova System is in the process of official LLC registration in Virginia.</i>
+  </p>
+</section>
+
 
   <!-- Footer -->
   <footer>
@@ -255,23 +293,48 @@
     // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Demo form handlers (replace with real endpoints)
-    document.getElementById('briefForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      alert('Connect this to your email service or redirect to Calendly.');
-      // Example: window.location.href = 'https://calendly.com/your-link/15min';
-    });
-
+    // Newsletter demo (still a placeholder)
     document.getElementById('newsForm').addEventListener('submit', function(e){
       e.preventDefault();
       alert('Hook this to Constant Contact (embed or API).');
     });
 
-    document.getElementById('contactForm').addEventListener('submit', function(e){
+    // ====== FORMSPREE WIRING (BOTH FORMS) ======
+    async function sendWithFormspree(formEl, statusEl) {
+      statusEl.textContent = 'Sending...';
+      try {
+        const res = await fetch(formEl.action, {
+          method: 'POST',
+          body: new FormData(formEl),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          formEl.reset();
+          statusEl.textContent = 'Thanks! Your message was sent.';
+        } else {
+          const t = await res.text();
+          statusEl.textContent = 'Error: ' + t.slice(0,180);
+        }
+      } catch (err) {
+        console.error(err);
+        statusEl.textContent = 'Network error. Please try again.';
+      }
+    }
+
+    // Quick Project Brief -> Formspree
+    const briefForm = document.getElementById('briefForm');
+    const briefStatus = document.getElementById('briefStatus');
+    briefForm.addEventListener('submit', function(e){
       e.preventDefault();
-      alert('Hook this to Formspree/EmailJS or your backend to send emails.');
-      // Example POST to Formspree
-      // fetch('https://formspree.io/f/xxxxxxx',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.fromEntries(new FormData(this)))})
+      sendWithFormspree(briefForm, briefStatus);
+    });
+
+    // Contact form -> Formspree
+    const contactForm = document.getElementById('contactForm');
+    const formStatus = document.getElementById('formStatus');
+    contactForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      sendWithFormspree(contactForm, formStatus);
     });
   </script>
 </body>
